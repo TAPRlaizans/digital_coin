@@ -1,0 +1,63 @@
+//@version=5
+strategy("价差策略", overlay=false)
+
+// 输入币种
+symbol1 = input.symbol("OKX:BTCUSDT", "币种1") 
+symbol2 = input.symbol("OKX:ETHUSDT", "币种2")
+start_time = input.time(defval=timestamp("2024-06-01 00:00"), title="初始时间点", confirm=true)
+if (symbol1 == "" or symbol2 == "")
+    runtime.error("请确保选择了两个币种")
+
+timeframe = timeframe.period
+price1 = request.security(symbol1, timeframe, close, barmerge.gaps_off, barmerge.lookahead_on)
+price2 = request.security(symbol2, timeframe, close, barmerge.gaps_off, barmerge.lookahead_on)
+base_currency_str = input.symbol(title="基准", defval="OKX:BTCUSDT")
+base_price = request.security(base_currency_str, timeframe, close, barmerge.gaps_off, barmerge.lookahead_on)
+price1_base = price1 / base_price
+price2_base = price2 / base_price
+spread = price1_base / price2_base
+spread := na(spread) ? na : (time >= start_time ? spread : na)
+
+// 计算
+length = input.int(20, "长度")
+mult = input.float(2.0, "倍数")
+basis = ta.sma(spread, length)
+dev = mult * ta.stdev(spread, length)
+upper = basis + dev
+lower = basis - dev
+lengthjz = input.int(20, "均值回归时间长度")
+use_mean_regression = input.bool(true, "use mean")
+mean_regression = ta.linreg(spread, lengthjz, 0)
+use_ma = input.bool(true, "use ma")
+ma_length = input.int(50, "长度")
+ma = ta.sma(spread, ma_length)
+min_trading_interval = input.int(30, "最小交易间隔（分钟）")  
+var float last_trade_time = na
+time_since_last_trade = na(last_trade_time) ? na : (time - last_trade_time) / 60000
+longCondition = ta.crossover(spread, upper) and spread > (use_mean_regression ? mean_regression : -1e20) and (na(time_since_last_trade) or time_since_last_trade > min_trading_interval) and spread > (use_ma ? ma : -1e20) 
+shortCondition = ta.crossunder(spread, lower) and spread < (use_mean_regression ? mean_regression : 1e20) and (na(time_since_last_trade) or time_since_last_trade > min_trading_interval) and spread < (use_ma ? ma : 1e20) 
+atr_length = input.int(14, "长度")
+atr = ta.atr(atr_length)
+stopLossATR = input.float(4.0, "止损倍数")
+takeProfitATR = input.float(4.0, "止盈倍数")
+longStop = strategy.position_avg_price - atr * stopLossATR
+longLimit = strategy.position_avg_price + atr * takeProfitATR
+shortStop = strategy.position_avg_price + atr * stopLossATR
+shortLimit = strategy.position_avg_price - atr * takeProfitATR
+if (longCondition)
+    strategy.entry("Buy ", strategy.long)
+if (shortCondition)
+    strategy.entry("Sell ", strategy.short)
+if (longCondition or shortCondition)
+    last_trade_time := time
+if (strategy.position_size > 0)
+    strategy.exit("Stop", "Buy " , stop=longStop, limit=longLimit)
+if (strategy.position_size < 0)
+    strategy.exit("Stop", "Sell ", stop=shortStop, limit=shortLimit)
+
+// 绘制图形
+plot(spread, title="spread", color=color.blue, linewidth=1)
+plot(basis, title="basis", color=color.orange, linewidth=1)
+plot(upper, title="upper", color=color.red, linewidth=1)
+plot(lower, title="lower", color=color.green, linewidth=1)
+

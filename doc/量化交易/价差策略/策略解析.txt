@@ -1,0 +1,24 @@
+输入部分：
+    需要比对的币种
+    获取基准货币的价格
+    初始的时间
+
+数据处理部分：
+    1.计算价差（spread）：spread = (price1 / base_price) / (price2 / base_price)，即两个币种相对于基准货币的比值。
+        公式等效于 spread = price1 / price2
+    2.计算价差的移动平均线（SMA）和标准差（STD）：basis = ta.sma(spread, length) 和 dev = mult * ta.stdev(spread, length)。
+    3.确定上界（upper）和下界（lower）：upper = basis + dev，lower = basis - dev。
+    4.计算线性回归均值回归线（mean_regression）：mean_regression = ta.linreg(spread, lengthjz, 0)。
+    5.计算价差的移动平均线（ma）：ma = ta.sma(spread, ma_length)。
+    6.计算上次交易以来的时间（分钟）：time_since_last_trade = na(last_trade_time) ? na : (time - last_trade_time) / 60000。
+
+交易部分：
+    生成交易条件
+    执行交易
+
+图像化：
+    绘制图像
+        价差
+        基准线
+        上界
+        下界
