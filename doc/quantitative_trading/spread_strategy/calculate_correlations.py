@@ -36,7 +36,7 @@ def get_symbols():
     symbols = [symbol['instId'] for symbol in data['data'] if 'USDT' in symbol['instId']]
     
     # 排除特定符号
-    excluded_symbols = ['ETH-USDT-SWAP', 'BTC-USDT-SWAP', 'USDC-USDT-SWAP', 'TUSD-USDT-SWAP', 'FDUSD-USDT-SWAP']
+    excluded_symbols = ['ETH-USDT-SWAP', 'BTC-USDT-SWAP', 'USDC-USDT-SWAP', 'TUSD-USDT-SWAP', 'FDUSD-USDT-SWAP','VENOM-USDT-SWAP']
     symbols = [symbol for symbol in symbols if symbol not in excluded_symbols]
     
     return symbols
@@ -64,7 +64,7 @@ def get_historical_klines(symbol, bar='1D', limit=100):
 def calculate_correlations(symbols):
     close_prices = {}
     for symbol in symbols:
-        print(f"Fetching data for {symbol}")
+        # print(f"Fetching data for {symbol}")
         df = get_historical_klines(symbol)
         if df is not None:
             close_prices[symbol] = df['close']
@@ -87,17 +87,19 @@ def get_top_correlations(correlations, top_n=40):
     top_negative = sorted(sorted_correlations, key=lambda x: x[1])[:top_n]
     return top_positive, top_negative
 
-# 主函数
-def main():
+def proc():
     print(os.path.join(path_current, string_program_output_name))
     File.mkdirFile(os.path.join(path_current, string_program_output_name))
 
+    print(f"process one time {Time_module.get_current_timestamp()}")
+    print("processing ...")
     symbols = get_symbols()
     correlations = calculate_correlations(symbols)
     top_positive, top_negative = get_top_correlations(correlations)
     
     print("正相关的前40组:")
     temp_path_file = os.path.join(path_current, string_program_output_name, f"{Time_module.get_current_timestamp()}.txt")
+    temp_path_file_only_pair = os.path.join(path_current, string_program_output_name, f"{Time_module.get_current_timestamp()}_only_pair.txt")
     with open(temp_path_file, "a", encoding="utf-8") as file:
         file.write("正相关的前40组:")
         for pair, corr in top_positive:
@@ -109,6 +111,28 @@ def main():
         for pair, corr in top_negative:
             file.write(f"\n{pair}: {corr}")
             print(f"{pair}: {corr}")
+        
+    with open(temp_path_file_only_pair, "a", encoding="utf-8") as file1:
+        file1.write("正相关的前40组:")
+        for pair, corr in top_positive:
+            file1.write(f"\n{pair}")
+
+        file1.write("\n负相关的前40组:")
+        for pair, corr in top_negative:
+            file1.write(f"\n{pair}")
+    print("process done ...")
+
+# 主函数
+def main(time_interval):
+    print(f"time_interval: {time_interval}")
+    while True:
+        try:
+            proc()
+        except Exception as e:
+            print(f"Error: {e}")
+            time.sleep(5)  # 等待5秒后重试
+        time.sleep(time_interval)
 
 if __name__ == "__main__":
-    main()
+    time_interval = 60*10  #秒
+    main(time_interval)
