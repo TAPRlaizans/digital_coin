@@ -1,0 +1,50 @@
+---------------context 1------------
+Title: Tether CEO：USDT市值已达1144亿美元，比最接近的对手高出800亿美元
+Link: https://m.theblockbeats.info/news/257789
+Published: Fri, 26 Jul 2024 00:59:35 +0800
+Summary: <p>BlockBeats 消息，7 月 26 日，Tether 首席执行官 Paolo Ardoino 在 X 平台发文称，USDT 两年前的市值为 658 亿美元，如今已经升至 1144 亿美元，比其最接近的竞争对手高出 800 亿美元。</p>
+---------------context 2------------
+Title: 7月25日八支美国以太坊ETF减持100230枚以太坊
+Link: https://m.theblockbeats.info/news/257788
+Published: Fri, 26 Jul 2024 00:42:40 +0800
+Summary: <p>BlockBeats 消息，7 月 26 日，据 Lookonchain 监测，7 月 25 日八支美国以太坊 ETF 减持 100230 枚以太坊，价值约合 3.1622 亿美元。其中：</p><p><br /></p><p>灰度减持 140,214 枚以太坊，价值约合 4.4238 亿美元，当前持有 2,489,075 枚 ETH，价值约合 78.5 亿美元；<br />富达增持约 22,000 枚 ETH，价值约 6941 万美元，当前持有 43,750 枚 ETH，价值约合 1.38 亿美元。</p>
+---------------context 3------------
+Title: Arkham宣布已集成至Coinbase钱包
+Link: https://m.theblockbeats.info/news/257787
+Published: Fri, 26 Jul 2024 00:31:21 +0800
+Summary: <p>BlockBeats 消息，7 月 26 日，Arkham 在 X 宣布，已集成至 Coinbase 钱包。用户现在可以将 Coinbase 钱包连接到 Arkham，直接在平台上跟踪持仓和交易。</p>
+---------------context 4------------
+Title: 7月25日九支美国比特币ETF增持960枚比特币
+Link: https://m.theblockbeats.info/news/257786
+Published: Fri, 26 Jul 2024 00:27:35 +0800
+Summary: <p>BlockBeats 消息，7 月 26 日，据 Lookonchain 监测，7 月 25 日九支美国比特币 ETF 增持 960 枚比特币，价值约合 6214 万美元。其中：</p><p><br />贝莱德增持约 1000 枚比特币，价值约 6469 万美元，当前持有 337,036 枚比特币，价值约 218.1 亿美元；<br />灰度减持约 428 枚比特币，价值约 2770 万美元，当前持有 271,623 枚比特币，价值约 175.8 亿美元。</p>
+---------------context 5------------
+Title: 特朗普已筹集超400万美元加密捐款，超半数为比特币
+Link: https://m.theblockbeats.info/news/257785
+Published: Fri, 26 Jul 2024 00:23:00 +0800
+Summary: <p>BlockBeats 消息，7 月 26 日，据 CNBC 报道，唐纳德·特朗普已筹集了超过 400 万美元的加密货币，贡献者已捐赠了比特币、以太坊、XRP 以及 USDC。至少 19 名捐赠者向该委员会捐赠了超过 215 万美元的比特币。</p><p><br /></p><p>加密货币亿万富翁双胞胎泰勒·文克莱沃斯 (Tyler Winklevoss) 和卡梅伦·文克莱沃斯 (Cameron Winklevoss) 领衔，每人捐赠了 15.57 枚比特币，即捐赠时略高于 100 万美元；</p><p><br /></p><p>数字资产安全公司 BitGo 的首席执行官 Mike Belshe 捐赠了 5 万美元的比特币；</p><p><br /></p><p>Kraken 创始人兼前首席执行官 Jesse Powell 捐赠了近 84.5 万美元的以太坊；</p><p><br /></p><p>Ripple 首席法律官 Stuart Alderoty 捐赠了 30 万美元的 XRP 代币。Messari 前首席执行官瑞恩·塞尔基斯 (Ryan Selkis) 捐赠了 50,000 美元的 USDC。</p>
+---------------context 6------------
+Title: Coinbase国际站将上线DYM、MKR和AAVE永续合约
+Link: https://m.theblockbeats.info/news/257784
+Published: Fri, 26 Jul 2024 00:04:36 +0800
+Summary: <p>BlockBeats 消息，7 月 26 日，Coinbase 将在 Coinbase International Exchange 和 Coinbase Advanced 上增加对 Dymension、Maker 和 Aave 永续合约的支持。DYM-PERP、MKR-PERP 和 AAVE-PERP 市场将于 2024 年 8 月 1 日上午 9:30（UTC 时间）或之后开始开放。</p>
+---------------context 7------------
+Title: Owlto Finance获得Optimism的Retro Funding第四轮奖励，共5.5万枚OP
+Link: https://m.theblockbeats.info/news/257783
+Published: Thu, 25 Jul 2024 23:47:42 +0800
+Summary: <p>BlockBeats 消息，7 月 25 日，Owlto 跨链桥作为 Superchain 生态的重要建设者之一，获得 Optimism 的 Retro Funding 第四轮的奖励，共 5.5 万枚 OP。</p><p><br /></p><p>BlockBeats 此前报道，Optimism 发文公布 Retro Funding 第四轮结果，拟对 207 个项目提供 OP 奖励，奖励分配按照链上影响力区分。目前，Owlto 已支持 Superchain 中的 9 条网络。</p>
+---------------context 8------------
+Title: Jupiter：将上线生态系统代币API，支持单次调用查看代币完整情况
+Link: https://m.theblockbeats.info/news/257782
+Published: Thu, 25 Jul 2024 23:46:59 +0800
+Summary: <p>BlockBeats 消息，7 月 25 日，据官方消息，Jupiter 宣布将上线生态系统代币 API，新 API 将代币、市场和合作伙伴信息进行整合，可以立即显示来自新市场的代币。代币每天都会经过 Jupiter 社区和用户的验证，进入可信列表。</p><p><br />新的 API 建立在 Metropolis 基础设施之上，代币合作伙伴集成包括 birdeye-trending、pumpfungraduates 和 clone 协议。用户可以在一次 API 调用中形成代币的完整情况。官方将在 2024 年 8 月底前一个月内弃用旧 API。</p>
+---------------context 9------------
+Title: 过去24小时全网爆仓3.38亿美元，主爆多单
+Link: https://m.theblockbeats.info/news/257781
+Published: Thu, 25 Jul 2024 23:35:05 +0800
+Summary: <p>BlockBeats 消息，7 月 25 日，据 Coinglass 数据显示，过去 24 小时全网爆仓 3.38 亿美元，其中多单爆仓 3.05 亿美元，空单爆仓 3220 万美元。</p>
+---------------context 10------------
+Title: 比特币突破65,000美元
+Link: https://m.theblockbeats.info/news/257779
+Published: Thu, 25 Jul 2024 23:19:21 +0800
+Summary: <p>BlockBeats 消息，7 月 25 日，据 HTX 行情信息，比特币突破 65,000 美元，现报价 65,002 美元，24 小时跌幅收窄至 1.7%。</p>
