@@ -1,0 +1,88 @@
+
+//@version=5            
+strategy("0.35 Hedging Strategy", overlay=true, margin_long=100, margin_short=100, max_labels_count=500)
+
+TP_percent = input.float(1.5, title="Take Profit (%)", step=0.1) / 100
+TP_increase_factor = 1
+recovery_zone_percent = input.float(2.0, title="Recovery Zone (%)", step=0.1) / 100
+initial_position_size = input.float(10, title="Initial Position Size (% of equity)", minval=0.1, maxval=100) / 100
+hedge_factor = input.float(1.2, title="Hedge Factor", step=0.1)
+max_qty = 10000.0
+
+var float long_tp = na
+var float short_tp = na
+var float long_recovery = na
+var float short_recovery = na
+var int hedge_count = 0
+
+if (hedge_count == 0)
+    TP_increase_factor = 1
+if (hedge_count == 1)
+    TP_increase_factor = 1.00
+if (hedge_count == 2)
+    TP_increase_factor = 0.95
+if (hedge_count == 3)
+    TP_increase_factor = 0.90
+if (hedge_count == 4)
+    TP_increase_factor = 0.85
+if (hedge_count == 5)
+    TP_increase_factor = 0.70
+if (hedge_count == 6)
+    TP_increase_factor = 0.50
+if (hedge_count == 7)
+    TP_increase_factor = 0.35
+if (hedge_count == 8)
+    TP_increase_factor = 0.25
+if (hedge_count == 9)
+    TP_increase_factor = 0.10
+
+// Debug label to check if the condition is true
+condition_met = (bar_index % 25 == 0 and strategy.opentrades == 0)
+if (condition_met)
+    strategy.entry("Short", strategy.short, qty=initial_position_size * strategy.equity / close, comment="Hedge Count: " + str.tostring(hedge_count))
+    //strategy.entry("Long", strategy.long, qty=initial_position_size * strategy.equity / close, comment="Hedge Count: " + str.tostring(hedge_count))//Disabled
+
+// Calculate Take Profit and Recovery Zone for long trades
+if (strategy.opentrades > 0 and strategy.position_size > 0)
+    long_tp := strategy.position_avg_price * (1 + TP_percent)
+    long_recovery := strategy.position_avg_price * (1 - (recovery_zone_percent * (1 + (hedge_count/100))))
+
+// Take Profit Logic for Long Trades
+if (close >= long_tp and strategy.opentrades > 0 and strategy.position_size > 0)
+    strategy.close("Long", comment="Take Profit - Hedge Count: " + str.tostring(hedge_count))
+    hedge_count := 0  // Reset hedge count after taking profit
+
+// Hedging Logic: Close long and open short if price reaches long recovery zone
+if (close <= long_recovery and strategy.opentrades > 0 and strategy.position_size > 0)
+    hedge_count := hedge_count + 1
+    hedge_qty = math.max(math.abs((initial_position_size * math.pow(hedge_factor, hedge_count)) * strategy.equity / close), 0.01)
+    strategy.close("Long")
+    strategy.entry("Short", strategy.short, qty=hedge_qty, comment="Hedge Count: " + str.tostring(hedge_count))
+
+if (strategy.position_size < 0)
+    short_tp := strategy.position_avg_price * (1 - (TP_percent * TP_increase_factor))
+else 
+    short_tp := na        
+
+short_recovery := strategy.position_avg_price * (1 + (recovery_zone_percent * (1 + (hedge_count/100))))
+
+// Take Profit Logic for Short Trades
+if (strategy.opentrades > 0 and close <= short_tp + syminfo.mintick)  // Ensure there's an open trade and check with a small buffer
+    strategy.close("Short", comment="Take Profit - Hedge Count: " + str.tostring(hedge_count))
+    hedge_count := 0  // Reset hedge count after taking profit
+
+// Hedge back to Long if price hits short recovery zone
+if (close >= short_recovery and strategy.opentrades > 0 and strategy.position_size < 0)
+    hedge_count := hedge_count + 1
+    hedge_qty = math.min((initial_position_size * math.pow(hedge_factor, hedge_count)) * strategy.equity / close, max_qty)
+    strategy.close("Short")
+    strategy.entry("Long", strategy.long, qty=hedge_qty, comment="Hedge Count: " + str.tostring(hedge_count))
+
+    long_tp := strategy.position_avg_price * (1 + (TP_percent * TP_increase_factor))
+    long_recovery := strategy.position_avg_price * (1 - recovery_zone_percent)
+
+// Plot the TP and Recovery Zone lines outside of the conditional blocks
+plot(not na(long_tp) ? long_tp : na, color=color.green, title="Long TP", linewidth=2)
+plot(not na(long_recovery) ? long_recovery : na, color=color.blue, title="Long Recovery Zone", linewidth=2)
+plot(not na(short_tp) ? short_tp : na, color=color.purple, title="Short TP", linewidth=2)
+plot(not na(short_recovery) ? short_recovery : na, color=color.red, title="Short Recovery Zone", linewidth=2)
