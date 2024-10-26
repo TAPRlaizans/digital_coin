@@ -1,0 +1,47 @@
+//@version=5
+strategy("5min_rsi_ob&os", overlay=true)
+
+// 定义RSI超买和超卖水平
+rsiOverbought = 70
+rsiOversold = 30
+
+// 计算不同时间周期的RSI
+rsi5 = ta.rsi(close, 14)
+rsi15 = request.security(syminfo.tickerid, "15", ta.rsi(close, 14))
+rsi60 = request.security(syminfo.tickerid, "60", ta.rsi(close, 14))
+rsi120 = request.security(syminfo.tickerid, "120", ta.rsi(close, 14))
+
+// 计算MACD直方图
+[macdLine, signalLine, macdHist] = ta.macd(close, 12, 26, 9)
+
+// 计算ATR
+atr = ta.atr(14)
+
+// 定义买入做多和卖入做空条件
+longCondition = rsi5 < rsiOversold and rsi15 > rsiOversold and rsi15 < rsiOverbought and rsi60 > rsiOversold and rsi60 < rsiOverbought and rsi120 > rsiOversold and rsi120 < rsiOverbought
+shortCondition = rsi5 > rsiOverbought and rsi15 > rsiOversold and rsi15 < rsiOverbought and rsi60 > rsiOversold and rsi60 < rsiOverbought and rsi120 > rsiOversold and rsi120 < rsiOverbought
+
+// 定义平仓条件
+longExitCondition = macdHist[1] > 0 and macdHist < 0
+shortExitCondition = macdHist[1] < 0 and macdHist > 0
+
+// 定义止损价格
+longStopLoss = high + atr
+shortStopLoss = low - atr
+
+// 执行交易操作
+if (longCondition)
+    strategy.entry("买入做多", strategy.long)
+    strategy.exit("平仓做多", "买入做多", stop=longStopLoss)
+
+if (shortCondition)
+    strategy.entry("卖出做空", strategy.short)
+    strategy.exit("平仓做空", "卖出做空", stop=shortStopLoss)
+
+// 在图表上标记买入做多和卖入做空信号
+plotshape(series=longCondition, location=location.belowbar, color=color.green, style=shape.labelup, text="买入做多")
+plotshape(series=shortCondition, location=location.abovebar, color=color.red, style=shape.labeldown, text="卖入做空")
+
+// 在图表上标记平仓信号
+plotshape(series=longExitCondition, location=location.abovebar, color=color.blue, style=shape.triangledown, text="平仓做多")
+plotshape(series=shortExitCondition, location=location.belowbar, color=color.orange, style=shape.triangleup, text="平仓做空")
