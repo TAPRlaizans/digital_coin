@@ -1,7 +1,8 @@
 import argparse
 import json
 
-class ArgsParse:
+class JsonHelper:
+    @staticmethod
     def read_json_file_to_object(json_file_path, string_encoding='utf-8'):
         try:
             # Open the JSON file for reading
@@ -18,4 +19,9 @@ class ArgsParse:
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
             exit(-1)
+    
+    @staticmethod
+    def dump_json_to_file(file_name, data):
+        with open(file_name, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=4, ensure_ascii=False)
 

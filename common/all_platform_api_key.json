@@ -17,5 +17,12 @@
     "coinmarketcap":{
         "api_key": "0a87431e-5b19-48be-8084-855ef00f1816",
         "limits": 6
+    },
+    "x":{
+        "api_key": "7MbYnEnA6SizMfTGuhmeTOABn",
+        "api_secret": "Qr4f01BGYhr9jgZT3PANFLsSkZqadBMn3o5oJ6vieFEFVeQavo",
+        "beerer token": "AAAAAAAAAAAAAAAAAAAAADfHwgEAAAAAuS8zMCCJDB6XJNB%2FeEQiwaCHH70%3DiLW5EbNJDDJd4BII5HiOqNZj0W9gaIojBffpgxTMwaHLvIQXzV",
+        "访问令牌": "1686980065974722560-xfxZOeqcNcbBQMECwMMTQoNCCIkPwO",
+        "访问令牌密码": "BJvHYKkstOgKMiOcDb1DBhiuVrCVHV6tiwouBbWaWBpen"
     }
 }
