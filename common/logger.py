@@ -3,7 +3,7 @@ import sys
 from loguru import logger
 from enum import Enum
 from enum import Enum
-from common.time_until import TimeUntil
+from common.time_helper import TimeHelper
 
 class LogLevel(str, Enum):
     Debug = 'DEBUG'
@@ -55,7 +55,6 @@ class Logger:
             format="<green>[{time:YYYY-MM-DD HH:mm:ss}]</green> <level>[{level}]</level> {message} <blue>[{module}.{function}]({file}:{line})</blue>"
         )
         logger.info('=================----------------app start----------------=================')
-
 
 def funcRecorder(func):
     def wrapper(*args,**kwargs):

@@ -18,6 +18,10 @@
         "api_key": "0a87431e-5b19-48be-8084-855ef00f1816",
         "limits": 6
     },
+    "coinpaprika":{
+        "official_website":"https://api.coinpaprika.com/v1/coins",
+        "api_key":""
+    },
     "x":{
         "api_key": "7MbYnEnA6SizMfTGuhmeTOABn",
         "api_secret": "Qr4f01BGYhr9jgZT3PANFLsSkZqadBMn3o5oJ6vieFEFVeQavo",
