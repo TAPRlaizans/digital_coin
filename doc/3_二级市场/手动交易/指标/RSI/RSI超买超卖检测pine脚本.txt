@@ -1,0 +1,43 @@
+//@version=5
+indicator("RSI 超买超卖检测", overlay=false)
+
+// 输入参数
+rsiLength = input.int(14, title="RSI Length")
+overboughtLevel = input.int(70, title="Overbought Level")
+oversoldLevel = input.int(30, title="Oversold Level")
+
+// 计算 RSI
+rsiValue = ta.rsi(close, rsiLength)
+
+// 检测 RSI 穿越情况
+rsiCrossBelowOversold = ta.crossover(oversoldLevel, rsiValue)
+rsiCrossAboveOversold = ta.crossunder(oversoldLevel, rsiValue)
+rsiCrossAboveOverbought = ta.crossover(rsiValue, overboughtLevel)
+rsiCrossBelowOverbought = ta.crossunder(rsiValue, overboughtLevel)
+
+// 触发警报
+if (rsiCrossBelowOversold)
+    alert("RSI 5分钟级别穿越30线超卖，注意找短多点位", alert.freq_once_per_bar)
+
+if (rsiCrossAboveOversold)
+    alert("RSI 5分钟级别的上穿30线", alert.freq_once_per_bar)
+
+if (rsiCrossAboveOverbought)
+    alert("RSI 5分钟级别上穿70线超买，注意找短空点位", alert.freq_once_per_bar)
+
+if (rsiCrossBelowOverbought)
+    alert("RSI 5分钟级别的下穿70线", alert.freq_once_per_bar)
+
+// 绘制 RSI 线
+rsiPlot = plot(rsiValue, color=color.blue, title="RSI")
+
+// 定义对比度大的颜色（黑色）
+contrastColor = color.rgb(0, 0, 0)
+
+// 填充 RSI 低于或等于 30 的区域
+fill(rsiPlot, plot(oversoldLevel, color=color.gray, title="Oversold Level"), 
+     color=rsiValue <= oversoldLevel ? color.new(contrastColor, 80) : na)
+
+// 填充 RSI 高于 70 的区域
+fill(rsiPlot, plot(overboughtLevel, color=color.gray, title="Overbought Level"), 
+     color=rsiValue > overboughtLevel ? color.new(contrastColor, 80) : na)
