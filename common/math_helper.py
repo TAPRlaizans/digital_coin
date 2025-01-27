@@ -18,4 +18,10 @@ class MathHelper():
         elif new_element < last_element:
             logger.info(f"数据元素个数减少: {new_element}, 请检查! last element is {last_element}, 减少个数是 {last_element - new_element}")
 
-    
+    def find_max_value(input_list):
+        if not input_list:
+            logger.info(f"列表为空!")
+            return None  
+
+        max_value = max(input_list)
+        return max_value
