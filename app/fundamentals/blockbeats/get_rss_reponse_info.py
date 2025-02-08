@@ -1,9 +1,10 @@
+import os
+import sys
+import time
 import requests
 import feedparser
+from loguru import logger
 from datetime import datetime
-import time
-import sys
-import os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PARENT_DIR = os.path.dirname(BASE_DIR)
@@ -13,35 +14,39 @@ sys.path.append(BASE_DIR)
 sys.path.append(PARENT_DIR)
 sys.path.append(PARENT_PARENT_DIR)
 sys.path.append(PARENT_PARENT_PARENT_DIR)
-from module.time_module.time_module import Time_module
+from common.time_helper import TimeHelper as th
+from common.json_helper import JsonHelper as jh
+from common.logger import Logger, LogLevel 
+from common.file_helper import FileHelper as fh
+from common.math_helper import MathHelper as mh
+from common.excle_helper import ExcleHelper as eh
+from common.request_helper import RequestHelper as rh
 
 def fetch_rss_feed(url):
     response = requests.get(url)
-    response.raise_for_status()  # 检查请求是否成功
+    response.raise_for_status()  
 
     feed = feedparser.parse(response.content)
     return feed
 
 def main():
-    rss_url = "https://api.theblockbeats.news/v1/open-api/home-xml"  # 将此替换为你想请求的 RSS URL
-    feed = fetch_rss_feed(rss_url)
+    while True:
+        logger.info("started fetch one time info from blockbeats")
+        rss_url = "https://api.theblockbeats.news/v1/open-api/home-xml" 
+        feed = fetch_rss_feed(rss_url)
 
-    print(f"Feed Title: {feed.feed.title}")
-    print(f"Feed Description: {feed.feed.description}")
-    temp_index =0
-    with open(f"./rss_reponse_{Time_module.get_current_timestamp()}.txt", "w+",encoding="utf-8") as f:
-        for entry in feed.entries:
-            # print(f"---------------context {temp_index}------------")
-            temp_index +=1
-            # print(f"\nTitle: {entry.title}")
-            # print(f"Link: {entry.link}")
-            # print(f"Published: {entry.published}")
-            # print(f"Summary: {entry.summary}")
-            f.write(f"---------------context {temp_index}------------")
-            f.write(f"\nTitle: {entry.title}\n")
-            f.write(f"Link: {entry.link}\n")
-            f.write(f"Published: {entry.published}\n")
-            f.write(f"Summary: {entry.summary}\n")
+        string_current_time = th.get_time_stamp_format()
+        string_txt_absolute_path = os.path.join(os.path.dirname(fh.get_current_file_path()),f"rss_reponse_{string_current_time}.txt")
+        with open(f"{string_txt_absolute_path}", "w+",encoding="utf-8") as f:
+            for entry in feed.entries:
+                f.write(f"\nTitle: {entry.title}\n")
+                f.write(f"Link: {entry.link}\n")
+                f.write(f"Published: {entry.published}\n")
+                f.write(f"Summary: {entry.summary}\n")
+
+        logger.info(f"finished one time info from blockbeats {string_current_time}, file path: {string_txt_absolute_path}")
+        logger.info(f"waiting for next time fetch")
+        th.time_sleep(5, 'm')
 
 if __name__ == "__main__":
     main()
