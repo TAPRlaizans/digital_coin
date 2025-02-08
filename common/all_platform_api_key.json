@@ -28,5 +28,8 @@
         "beerer token": "AAAAAAAAAAAAAAAAAAAAADfHwgEAAAAAuS8zMCCJDB6XJNB%2FeEQiwaCHH70%3DiLW5EbNJDDJd4BII5HiOqNZj0W9gaIojBffpgxTMwaHLvIQXzV",
         "访问令牌": "1686980065974722560-xfxZOeqcNcbBQMECwMMTQoNCCIkPwO",
         "访问令牌密码": "BJvHYKkstOgKMiOcDb1DBhiuVrCVHV6tiwouBbWaWBpen"
+    },
+    "deepseek":{
+        "api_key": "sk-a9503613e9664eedbb6da6a8b81b874e"
     }
 }
