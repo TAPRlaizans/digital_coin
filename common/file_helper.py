@@ -12,6 +12,7 @@ import re
 import sys
 import time
 import shutil
+import inspect
 from loguru import logger
 from common.logger import Logger, LogLevel
 
@@ -139,7 +140,20 @@ class FileHelper():
             return all_lines
         finally:
             file_object.close()
-
+        
+    @staticmethod
+    def get_current_file_path():
+        current_frame = inspect.currentframe()
+        caller_frame = inspect.getouterframes(current_frame, 2)
+        file_path = os.path.abspath(caller_frame[1].filename)
+        return file_path
+    
+    #单线程获取方式
+    @staticmethod
+    def get_file_absolute_path(file_path):
+        absolute_path = os.path.abspath(file_path)
+        return absolute_path
+    
 def main(): 
     pass
 
