@@ -34,3 +34,15 @@ class TimeHelper:
             return dt.strftime('%Y-%m-%d %H:%M:%S')
         else:
             return "Invalid precision specified. Please choose from 'day', 'hour', 'minute', or 'second'."
+
+    @staticmethod
+    def time_sleep(number = 1, unit = 's'):
+        if unit == 's':
+            time.sleep(number)
+        elif unit == 'm':
+            time.sleep(number * 60)
+        elif unit == 'h':
+            time.sleep(number * 3600)
+        elif unit == 'd':
+            time.sleep(number * 86400)
+         
